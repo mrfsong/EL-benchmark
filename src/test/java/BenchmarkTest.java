@@ -1,14 +1,14 @@
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.Expression;
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyObject;
 
 
-public class Benchmark {
+public class BenchmarkTest {
     static int count = 10000000;
 
 
@@ -19,25 +19,25 @@ public class Benchmark {
         double d = -3.9;
         byte b = (byte) 4;
         boolean bool = false;
+        String t = "hello";
         env.put("i", i);
         env.put("pi", pi);
         env.put("d", d);
         env.put("b", b);
         env.put("bool", bool);
+        env.put("t" , t);
         final String exp =
-                "i * pi + (d * b - 199) / (1 - d * pi) - (2 + 100 - i / pi) % 99 ==i * pi + (d * b - 199) / (1 - d * pi) - (2 + 100 - i / pi) % 99";
-        // testGroovy(exp, env);
-        // testAviator(exp, env);
+                "i * pi + (d * b - 199) / (1 - d * pi) - (2 + 100 - i / pi) % 99 == i * pi + (d * b - 199) / (1 - d * pi) - (2 + 100 - i / pi) % 99";
+//         testGroovy(exp, env);
+//         testAviator(exp, env);
         // // testIKExpression(exp, env);
         // testLiteral();
         // testCompileIKExpression(exp);
-        /*
-         * testCompileAviator(exp); testCompileGroovy(exp);
-         */
+         testCompileAviator(exp); testCompileGroovy(exp);
         // testAviator("sysdate()");
         // testGroovy("new java.util.Date()");
         // testIKExpression("$SYSDATE()");
-        testLiteral();
+//        testLiteral();
 
     }
 
@@ -50,6 +50,9 @@ public class Benchmark {
 
         System.out.println("test literal logic expression ...");
         benchmark("6.7-100>39.6 ? 5==5? 4+5:6-1 : !(100%3-39.0<27) ? 8*2-199: 100%3");
+
+        System.out.println("test logic expression ...");
+        benchmark("'A' == 'A' || 'B' == 'B' && 'ABCD' == '123' && 'A' == 'A'");
     }
 
 
@@ -135,6 +138,14 @@ public class Benchmark {
         }
 
         System.out.println(result + ",groovy duration:" + (System.currentTimeMillis() - start));
+    }
+
+    public static void testIKExpression(String exp) throws Exception{
+
+    }
+
+    public static void testIKExpression(String exp, Map<String, Object> env) throws Exception{
+
     }
 
 }
